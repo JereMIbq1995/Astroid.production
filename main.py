@@ -1,5 +1,6 @@
 from astroid.script.HandleCollisionsAction import HandleCollisionAction
 from astroid.script.HandleShootingAction import HandleShootingAction
+from astroid.script.PlayBackgroundMusicAction import PlayBackgroundMusicAction
 from genie.director import Director
 from genie.services.PygameKeyboardService import PygameKeyboardService
 from genie.services.PygamePhysicsService import PygamePhysicsService
@@ -56,6 +57,7 @@ def main():
     spawn_astroid = SpawnAstroidsAction(1, W_SIZE)
 
     # Create output actions
+    play_background_music = PlayBackgroundMusicAction("astroid/assets/sound/background_music.wav")
     draw_frame = DrawFrameAction(1, W_SIZE, background_image)
 
     # Give action(s) to the script
@@ -65,6 +67,7 @@ def main():
     script.append(handle_offscreen)
     script.append(handle_collision)
     script.append(spawn_astroid)
+    script.append(play_background_music)
     script.append(draw_frame)
 
     # Give the cast and script to the dirrector by calling direct_scene.

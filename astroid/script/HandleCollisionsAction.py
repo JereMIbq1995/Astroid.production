@@ -5,12 +5,14 @@ from astroid.cast.bullet import Bullet
 
 from genie.script.action import UpdateAction
 from genie.services.PygamePhysicsService import PygamePhysicsService
+from genie.services.PygameAudioService import PygameAudioService
 
 class HandleCollisionAction(UpdateAction):
     def __init__(self, priority):
         self._priority = priority
         self._ship = None
         self._physics_service = PygamePhysicsService()
+        self._audio_service = PygameAudioService()
     
     def _handle_bullet_astroid_col(self, actors, callback):
         bullets = []
@@ -26,6 +28,7 @@ class HandleCollisionAction(UpdateAction):
                 if self._physics_service.check_collision(bullet, astroid):
                     callback.remove_actor(bullet)
                     callback.remove_actor(astroid)
+                    self._audio_service.play_sound("astroid/assets/sound/explosion-01.wav")
     
     def _handle_ship_astroid_col(self, actors, callback):
         for actor in actors:
@@ -39,6 +42,7 @@ class HandleCollisionAction(UpdateAction):
                     if self._physics_service.check_collision(self._ship, actor):
                         callback.remove_actor(self._ship)
                         callback.remove_actor(actor)
+                        self._audio_service.play_sound("astroid/assets/sound/explosion-01.wav")
                         self._ship = None
                         break
 

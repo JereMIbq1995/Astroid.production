@@ -8,7 +8,7 @@ class PygameAudioService:
         self._sound_cache = {}
 
     def _load_sound(self, path):
-        sound = pygame.mixer.load(path)
+        sound = pygame.mixer.Sound(path)
         if path not in self._sound_cache.keys():
             self._sound_cache[path] = sound
         

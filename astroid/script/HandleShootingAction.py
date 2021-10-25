@@ -1,5 +1,6 @@
 from genie.script.action import InputAction
 from genie.services.PygameKeyboardService import PygameKeyboardService
+from genie.services.PygameAudioService import PygameAudioService
 from genie.services.constants import keys
 
 from astroid.cast.ship import Ship
@@ -16,6 +17,7 @@ class HandleShootingAction(InputAction):
         self._ship = None
         self._last_bullet_spawn = 0
         self._keyboard_service = keyboard_service
+        self._audio_service = PygameAudioService()
     
     def _spawn_bullet(self, clock, callback):
         time_since_last_shot = clock._frames - self._last_bullet_spawn
@@ -25,6 +27,7 @@ class HandleShootingAction(InputAction):
             
             bullet = Bullet("astroid/assets/bullet.png", 0.7, x = bullet_x, y = bullet_y, vx = BULLET_VX, vy = BULLET_VY)
             callback.add_actor(bullet)
+            self._audio_service.play_sound("astroid/assets/sound/bullet_shot.wav")
             self._last_bullet_spawn = clock._frames
 
     def _get_ship(self, actors):
