@@ -6,7 +6,7 @@ import random
 
 from pygame import image
 
-SPAWN_INTERVAL = 200
+SPAWN_INTERVAL = 150
 
 class SpawnAstroidsAction(UpdateAction):
     def __init__(self, priority, window_size):

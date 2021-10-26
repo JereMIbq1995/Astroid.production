@@ -28,7 +28,7 @@ class HandleCollisionAction(UpdateAction):
                 if self._physics_service.check_collision(bullet, astroid):
                     callback.remove_actor(bullet)
                     callback.remove_actor(astroid)
-                    self._audio_service.play_sound("astroid/assets/sound/explosion-01.wav")
+                    self._audio_service.play_sound("astroid/assets/sound/explosion-01.wav", 0.1)
     
     def _handle_ship_astroid_col(self, actors, callback):
         for actor in actors:
@@ -42,7 +42,7 @@ class HandleCollisionAction(UpdateAction):
                     if self._physics_service.check_collision(self._ship, actor):
                         callback.remove_actor(self._ship)
                         callback.remove_actor(actor)
-                        self._audio_service.play_sound("astroid/assets/sound/explosion-01.wav")
+                        self._audio_service.play_sound("astroid/assets/sound/explosion-01.wav", 0.1)
                         self._ship = None
                         break
 

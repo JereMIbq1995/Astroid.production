@@ -14,8 +14,8 @@ class PygameAudioService:
         
         return sound
 
-    def play_sound(self, path):
-        if path not in self._sound_cache.keys():
-            self._load_sound(path).play()
-        else:
-            self._sound_cache[path].play()
+    def play_sound(self, path, volume : float = 1):
+        sound = self._load_sound(path) if path not in self._sound_cache.keys() \
+                else self._sound_cache[path]
+        sound.set_volume(volume)
+        sound.play()
