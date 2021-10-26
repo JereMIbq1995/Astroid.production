@@ -57,7 +57,7 @@ def main():
     spawn_astroid = SpawnAstroidsAction(1, W_SIZE)
 
     # Create output actions
-    play_background_music = PlayBackgroundMusicAction("astroid/assets/sound/background_music.wav")
+    play_background_music = PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav")
     draw_frame = DrawFrameAction(1, W_SIZE, background_image)
 
     # Give action(s) to the script

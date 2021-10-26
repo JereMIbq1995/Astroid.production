@@ -16,9 +16,4 @@ class DrawFrameAction(OutputAction):
         return super().set_priority(priority)
 
     def execute(self, actors, actions, clock, callback):
-        if self._background_image == None:
-            for actor in actors:
-                if (isinstance(actor, Background)):
-                    self._background_image = actor
-                    break
         self._screen_service.draw_frame(actors, background_image = self._background_image)
