@@ -77,7 +77,7 @@ class Director(Action.Callback):
         self._clock.tick()
         for action in self._actions:
             if isinstance(action, InputAction):
-                action.execute(self._actors, self._actions, self._clock, self)
+                action.execute(self._get_actors_copy(), self._get_actions_copy(), self._clock, self)
 
     def _do_updates(self):
         """Cues the update actions for the given cast and script. This method 
@@ -87,7 +87,7 @@ class Director(Action.Callback):
         while self._clock.is_lagging():
             for action in self._actions:
                 if isinstance(action, UpdateAction):
-                    action.execute(self._actors, self._actions, self._clock, self)
+                    action.execute(self._get_actors_copy(), self._get_actions_copy(), self._clock, self)
             self._clock.catch_up()
     
     def _do_outputs(self):
@@ -97,9 +97,24 @@ class Director(Action.Callback):
         """
         for action in self._actions:
             if isinstance(action, OutputAction):
-                action.execute(self._actors, self._actions, self._clock, self)
+                action.execute(self._get_actors_copy(), self._get_actions_copy(), self._clock, self)
         self._apply_changes()
+        print("Number of actors: ", len(self._actors))
     
+    def _get_actors_copy(self):
+        """
+            Return a copy of the self._actors list.
+            Note: The list is a copy. But each item in the list IS the original item.
+        """
+        return [actor for actor in self._actors]
+    
+    def _get_actions_copy(self):
+        """
+            Return a copy of the self._actions list.
+            Note: The list is a copy. But each item in the list IS the original item.
+        """
+        return [action for action in self._actions]
+
     def add_action(self, action):
         """Add the given action to the script.
 
