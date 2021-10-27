@@ -19,7 +19,9 @@ class PygamePhysicsService:
             - create pygame.Shape
             - call colliderect
         """
-        return actor1.colliderect(actor2)
+        rect1 = pygame.Rect(actor1.get_top_left()[0], actor1.get_top_left()[1], actor1.get_width(), actor1.get_height())
+        rect2 = pygame.Rect(actor2.get_top_left()[0], actor2.get_top_left()[1], actor2.get_width(), actor2.get_height())
+        return rect1.colliderect(rect2)
 
     def is_above(self, actor1 : Actor, actor2 : Actor):
         """

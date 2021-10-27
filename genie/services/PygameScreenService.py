@@ -133,7 +133,8 @@ class PygameScreenService:
             # Draw the image with pygame
             self._window.blit(transformed_image, image_topleft)
 
-            # pygame.draw.rect(self._window, (0,0,0), actor, width = 5)
+            # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(actor_topleft[0], actor_topleft[1], actor.get_width(), actor.get_height()), width = 5)
+            # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(image_topleft[0], image_topleft[1], transformed_image.get_width(), transformed_image.get_height()), width = 5)
 
     def release(self):
         pass
