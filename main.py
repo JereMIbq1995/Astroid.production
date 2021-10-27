@@ -5,10 +5,6 @@ from genie.director import Director
 from genie.services.PygameKeyboardService import PygameKeyboardService
 from genie.services.PygamePhysicsService import PygamePhysicsService
 
-from genie.cast.actor import Actor
-from genie.script.action import Action
-
-
 from astroid.cast.ship import Ship
 from astroid.cast.background import Background
 
@@ -33,12 +29,14 @@ def main():
 
     # Create the player
     player = Ship(path="astroid/assets/spaceship/spaceship_yellow.png", 
-                    scale= 0.12,
+                    width = 70,
+                    height = 50,
                     x = W_SIZE[0]/2,
                     y = W_SIZE[1]/10 * 9,
-                    rotation=180,
-                    player_controlled=True)
-    background_image = Background("astroid/assets/space_1.png",1, x = W_SIZE[0]/2, y = W_SIZE[1]/2)
+                    rotation=180)
+    # Scale the background to have the same dimensions as the Window,
+    # then position it at the center of the screen
+    background_image = Background("astroid/assets/space_1.png", width=W_SIZE[0], height=W_SIZE[1], x = W_SIZE[0]/2, y = W_SIZE[1]/2)
 
     # Give actor(s) to the cast
     cast.append(player)

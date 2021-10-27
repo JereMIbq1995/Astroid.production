@@ -2,6 +2,8 @@ from genie.script.action import InputAction
 from genie.services.PygameKeyboardService import PygameKeyboardService
 from genie.services.constants import keys
 
+from astroid.cast.ship import Ship
+
 VEL = 4
 
 class HandleInputAction(InputAction):
@@ -14,7 +16,7 @@ class HandleInputAction(InputAction):
             callback.on_stop()
 
         for actor in actors:
-            if actor.player_controlled():
+            if isinstance(actor, Ship):
                 keys_state = self._keyboard_service.get_keys_state(keys.LEFT, keys.RIGHT, keys.DOWN, keys.UP)
                 if keys_state[keys.LEFT]:
                     actor.set_vx(-VEL)

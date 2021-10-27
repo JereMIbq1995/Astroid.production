@@ -25,7 +25,7 @@ class HandleShootingAction(InputAction):
             bullet_x = self._ship.get_x()
             bullet_y = self._ship.get_y() - (self._ship.get_height() / 2)
             
-            bullet = Bullet("astroid/assets/bullet.png", 0.7, x = bullet_x, y = bullet_y, vx = BULLET_VX, vy = BULLET_VY)
+            bullet = Bullet("astroid/assets/bullet.png", 20, 30, x = bullet_x, y = bullet_y, vx = BULLET_VX, vy = BULLET_VY)
             callback.add_actor(bullet)
             self._audio_service.play_sound("astroid/assets/sound/bullet_shot.wav", 0.1)
             self._last_bullet_spawn = clock._frames
