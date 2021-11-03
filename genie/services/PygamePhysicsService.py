@@ -6,6 +6,9 @@ class PygamePhysicsService:
         if not pygame.get_init():
             pygame.init()
 
+    def _get_rectangle(self, actor: Actor):
+        return pygame.Rect(actor.get_top_left()[0], actor.get_top_left()[1], actor.get_width(), actor.get_height())
+
     def rotate_actors(self, actors : list):
         for actor in actors:
             actor.rotate()
@@ -19,21 +22,32 @@ class PygamePhysicsService:
             - create pygame.Shape
             - call colliderect
         """
-        rect1 = pygame.Rect(actor1.get_top_left()[0], actor1.get_top_left()[1], actor1.get_width(), actor1.get_height())
-        rect2 = pygame.Rect(actor2.get_top_left()[0], actor2.get_top_left()[1], actor2.get_width(), actor2.get_height())
-        return rect1.colliderect(rect2)
+        return self._get_rectangle(actor1) \
+                .colliderect(
+                self._get_rectangle(actor2)
+                )
+        
 
     def is_above(self, actor1 : Actor, actor2 : Actor):
         """
             Return true if actor1 is above actor2, and false otherwise
         """
-        pass
+        return actor1.get_top_left()[1] < actor2.get_top_left()[1]
 
-    def is_below(self, actor1, actor2):
-        pass
+    def is_below(self, actor1 : Actor, actor2 : Actor):
+        """
+            Return true if actor1 is below actor2, false otherwise
+        """
+        return actor1.get_bottom_left()[1] > actor2.get_bottom_left()[1]
 
-    def is_left_of(self, actor1, actor2):
-        pass
+    def is_left_of(self, actor1 : Actor, actor2 : Actor):
+        """
+            Return true if actor1 is on the left of actor2, false otherwise
+        """
+        return actor1.get_top_left()[0] < actor2.get_top_left()[0]
 
-    def is_right_of(self, actor1, actor2):
-        pass
+    def is_right_of(self, actor1 : Actor, actor2 : Actor):
+        """
+            Return true if actor1 is on the right of actor2, false otherwise
+        """
+        return actor1.get_top_right()[0] > actor2.get_top_right()[0]

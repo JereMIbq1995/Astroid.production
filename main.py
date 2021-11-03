@@ -36,9 +36,17 @@ def main():
                     rotation=180)
     # Scale the background to have the same dimensions as the Window,
     # then position it at the center of the screen
-    background_image = Background("astroid/assets/space_1.png", width=W_SIZE[0], height=W_SIZE[1], x = W_SIZE[0]/2, y = W_SIZE[1]/2)
+    background_image = Background("astroid/assets/space.png", 
+                                    width=W_SIZE[0],
+                                    height=W_SIZE[1],
+                                    x = W_SIZE[0]/2,
+                                    y = W_SIZE[1]/2)
 
-    # Give actor(s) to the cast
+    # score = 
+
+    # Give actor(s) to the cast. Append the background first so that it won't
+    # be drawn on top of other actors.
+    cast.append(background_image)
     cast.append(player)
 
     # Create all the actions

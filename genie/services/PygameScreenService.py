@@ -67,6 +67,17 @@ class PygameScreenService:
         """
         pygame.display.update()
 
+    # def get_text_image(self):
+    #     font = pygame.font.SysFont(font, font_size)
+    #     text_image = font.render(text, antialias, color)
+
+    def draw_text(self, text : str, font : str = None, font_size : int = 24, 
+                    color : tuple = (0, 0, 0), position : tuple = (0, 0),
+                    antialias : bool = True):
+        font = pygame.font.SysFont(font, font_size)
+        text_image = font.render(text, antialias, color)
+        self._window.blit(text_image, position)
+
     def draw_rectangle(self, center : Tuple, width : int, height: int, color : tuple = (0, 0, 0), 
                         border_width : int = 0, border_radius : int = 0, border_top_left_radius : int = -1,
                         border_top_right_radius : int = -1, border_bottom_left_radius : int = -1, 
@@ -86,31 +97,32 @@ class PygameScreenService:
         """
         pygame.draw.circle(self._window, color, center, radius, width, draw_top_right, draw_top_left, draw_bottom_left, draw_bottom_right)
 
-    def draw_frame(self, actors, color = WHITE, background_image : Actor = None, lerp : float = 0):
+    # def draw_frame(self, actors, background_color = WHITE, lerp : float = 0):
+    #     """
+    #         Takes in a list of actors and a background image, then:
+    #             - First, fill the screen with the background_color provided (default is WHITE)
+    #             - Draw all the actors in the "actors" list in order:
+    #                 First thing in the list gets drawn first.
+    #             - Update display to show all the drawing.
+                
+    #             Note:
+    #                 - If there is a background image, it should be the first thing
+    #                     on the list, otherwise it might be drawn on top of other
+    #                     actors, causing them to be hidden
+    #                 - The background_color provided might not be seen if there's an actor
+    #                     (most likely the background image) drawn on top of it.
+    #     """
+    #     # self._draw_background(color, background_image)
+    #     self._window.fill(background_color)
+    #     self.draw_actors(actors, lerp)
+    #     pygame.display.update()
+    
+    def draw_actors(self, actors : list, lerp : float = 0):
         """
-            Takes in a list of actors and a background image, then:
-                - First, draw the background if it's given.
-                    If background is not given, fill the screen the color given (default is WHITE)
-                - Next, draw all the actors in the "actors" list on top of the background
-                - Update display to show all the drawing.
-        """
-        self._draw_background(color, background_image)
-        self._draw_images(actors, lerp)
-        pygame.display.update()
+            Draw all the actors in the "actors" list in order:
+                    First thing in the list gets drawn first.
 
-    def _draw_background(self, color : tuple, background_image : Actor = None):
-        """
-            Simply draws the background
-        """
-        self._window.fill(color)
-        if background_image != None:
-            path = background_image.get_path()
-            image = self._images_cache[path] if path in self._images_cache.keys() else self._load_image(background_image, True)
-            self._window.blit(image, background_image.get_top_left())
-
-    def _draw_images(self, actors : list, lerp : float = 0):
-        """
-            actors: actors that need to be drew
+            actors: actors that need to be drawn
             lerp: linear interpolation
         """
         for actor in actors:

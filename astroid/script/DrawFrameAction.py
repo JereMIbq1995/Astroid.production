@@ -16,4 +16,6 @@ class DrawFrameAction(OutputAction):
         return super().set_priority(priority)
 
     def execute(self, actors, actions, clock, callback):
-        self._screen_service.draw_frame(actors, background_image = self._background_image)
+        self._screen_service.draw_actors(actors)
+        self._screen_service.draw_text("Hello World!", position= (20,20))
+        self._screen_service.update_screen()

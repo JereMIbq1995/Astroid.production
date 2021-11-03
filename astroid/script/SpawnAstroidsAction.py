@@ -2,24 +2,24 @@ from genie.script.action import UpdateAction
 from astroid.cast.astroid import Astroid
 
 import random
+import time
 
-from pygame import image
-
-SPAWN_INTERVAL = 150
+SPAWN_INTERVAL = 1.5          # seconds
 LARGE_SIZE = (175, 175)
-MEDIUM_SIZE = (120, 120)
-SMALL_SIZE = (75, 75)
+MEDIUM_SIZE = (100, 100)
+SMALL_SIZE = (40, 40)
 
 class SpawnAstroidsAction(UpdateAction):
     def __init__(self, priority, window_size):
         super().__init__(priority)
-        self._last_spawn = 0
+        self._last_spawn = time.time() # seconds
         self._window_size = window_size
         self._astroid_spawn = False
 
     def execute(self, actors, actions, clock, callback):
         #  and self._astroid_spawn == False
-        if (clock._frames - self._last_spawn) >= SPAWN_INTERVAL:
+        if time.time() - self._last_spawn >= SPAWN_INTERVAL:
+
             # Generate a random position on top of the screen
             lower = int(self._window_size[0] / 8)
             higher = int(self._window_size[0] - lower)
@@ -53,4 +53,4 @@ class SpawnAstroidsAction(UpdateAction):
             callback.add_actor(astroid)
 
             # set last_spawn to current frame
-            self._last_spawn = clock._frames
+            self._last_spawn = time.time()
