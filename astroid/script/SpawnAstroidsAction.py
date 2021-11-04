@@ -37,19 +37,27 @@ class SpawnAstroidsAction(UpdateAction):
             as_type = random.randint(0,3)
             image_path = ""
             size = ()
+            point = 0
+            hp = 0
             if as_type == 1:
                 image_path = "astroid/assets/astroids/astroid_large.png"
                 size = LARGE_SIZE
+                points = 3
+                hp = 5
             elif as_type == 2:
                 image_path = "astroid/assets/astroids/astroid_med.png"
                 size = MEDIUM_SIZE
+                points = 2
+                hp = 3
             else:
                 image_path = "astroid/assets/astroids/astroid_small.png"
                 size = SMALL_SIZE
+                points = 1
+                hp = 1
 
 
             # spawn an astroid
-            astroid = Astroid(image_path, *size, x = start_pos_x, y = start_pos_y, vx = vel_x, vy = vel_y, rotation_vel=1)
+            astroid = Astroid(image_path, *size, x = start_pos_x, y = start_pos_y, vx = vel_x, vy = vel_y, rotation_vel=1, points=points, max_hp=hp)
             callback.add_actor(astroid)
 
             # set last_spawn to current frame

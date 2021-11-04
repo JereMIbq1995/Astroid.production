@@ -7,6 +7,7 @@ from genie.services.PygamePhysicsService import PygamePhysicsService
 
 from astroid.cast.ship import Ship
 from astroid.cast.background import Background
+from astroid.cast.playerScore import PlayerScore
 
 from astroid.script.DrawFrameAction import DrawFrameAction
 from astroid.script.HandleInputAction import HandleInputAction
@@ -42,12 +43,13 @@ def main():
                                     x = W_SIZE[0]/2,
                                     y = W_SIZE[1]/2)
 
-    # score = 
+    score = PlayerScore(path="", score=0)
 
     # Give actor(s) to the cast. Append the background first so that it won't
     # be drawn on top of other actors.
     cast.append(background_image)
     cast.append(player)
+    cast.append(score)
 
     # Create all the actions
     script = []

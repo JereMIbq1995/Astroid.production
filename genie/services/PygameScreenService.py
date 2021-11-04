@@ -129,24 +129,29 @@ class PygameScreenService:
             actor_topleft = actor.get_top_left()
             path = actor.get_path()
             
-            # Load image from cache or from file
-            image = self._images_cache[path] if path in self._images_cache.keys() else self._load_image(actor)
+            try:
+                # Load image from cache or from file
+                image = self._images_cache[path] if path in self._images_cache.keys() else self._load_image(actor)
 
-            # Ensure that the image rotates when actor._rotation changes or when width and height change
-            transformed_image = pygame.transform.rotate(
-                    pygame.transform.scale(image, (actor.get_width(), actor.get_height())), 
-                    actor.get_rotation())
-            
-            # Shift the image upward and to the left to account for pygame's way to do rotation
-            offset_x = (transformed_image.get_width() - actor.get_width()) / 2
-            offset_y = (transformed_image.get_height() - actor.get_height()) / 2
-            image_topleft = (actor_topleft[0] - offset_x, actor_topleft[1] - offset_y)
+                # Ensure that the image rotates when actor._rotation changes or when width and height change
+                transformed_image = pygame.transform.rotate(
+                        pygame.transform.scale(image, (actor.get_width(), actor.get_height())), 
+                        actor.get_rotation())
+                
+                # Shift the image upward and to the left to account for pygame's way to do rotation
+                offset_x = (transformed_image.get_width() - actor.get_width()) / 2
+                offset_y = (transformed_image.get_height() - actor.get_height()) / 2
+                image_topleft = (actor_topleft[0] - offset_x, actor_topleft[1] - offset_y)
 
-            # Draw the image with pygame
-            self._window.blit(transformed_image, image_topleft)
+                # Draw the image with pygame
+                self._window.blit(transformed_image, image_topleft)
 
-            # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(actor_topleft[0], actor_topleft[1], actor.get_width(), actor.get_height()), width = 5)
-            # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(image_topleft[0], image_topleft[1], transformed_image.get_width(), transformed_image.get_height()), width = 5)
+                # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(actor_topleft[0], actor_topleft[1], actor.get_width(), actor.get_height()), width = 5)
+                # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(image_topleft[0], image_topleft[1], transformed_image.get_width(), transformed_image.get_height()), width = 5)
+            except:
+                print("Could not load image!")
+        
+        
 
     def release(self):
         pass
