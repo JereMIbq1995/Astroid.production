@@ -1,6 +1,7 @@
 General Requirements:
 - (Done) the player controls a space ship that spawns on the bottom and in the middle of the screen
 - (Done) the player press UP, DOWN, LEFT, RIGHT keys to move the ship
+- (Done) the player's ship cannot move outside of the screen
 - (Done) the player press SPACE to shoot bullets
 - (Done) astroids continually spawn from the top
 - (Done) There is a mothership on the bottom of the screen that the player tries to protect
