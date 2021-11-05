@@ -84,36 +84,22 @@ def main():
     audio_service = PygameAudioService()
 
     # Create input actions
-    handle_quit_action = HandleQuitAction(1, keyboard_service)
-    handle_ship_movement = HandleShipMovementAction(1, keyboard_service)
-    handle_shooting = HandleShootingAction(1, keyboard_service)
+    script.append(HandleQuitAction(1, keyboard_service))
+    script.append(HandleShipMovementAction(1, keyboard_service))
+    script.append(HandleShootingAction(1, keyboard_service))
 
     # Create update actions
-    move_bodies = MoveActorsAction(1, physics_service)
-    handle_offscreen = HandleOffscreenAction(1, W_SIZE)
-    handle_ship_above_mothership = HandleShipAboveMotherShipAction(1, W_SIZE)
-    handle_ship_astroids_collision = HandleShipAstroidsCollision(1, physics_service, audio_service)
-    handle_bullets_astroids_collision = HandleBulletsAstroidsCollision(1, physics_service, audio_service)
-    handle_mothership_astroids_collision = HandleMothershipAstroidsCollision(1, physics_service, audio_service)
-    spawn_astroids = SpawnAstroidsAction(1, W_SIZE)
+    script.append(MoveActorsAction(1, physics_service))
+    script.append(HandleOffscreenAction(1, W_SIZE))
+    script.append(HandleShipAboveMotherShipAction(1, W_SIZE))
+    script.append(HandleShipAstroidsCollision(1, physics_service, audio_service))
+    script.append(HandleBulletsAstroidsCollision(1, physics_service, audio_service))
+    script.append(HandleMothershipAstroidsCollision(1, physics_service, audio_service))
+    script.append(SpawnAstroidsAction(1, W_SIZE))
 
     # Create output actions
-    play_background_music = PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav", audio_service)
-    draw_frame = DrawFrameAction(1, W_SIZE, background_image, screen_service)
-
-    # Give action(s) to the script
-    script.append(handle_quit_action)
-    script.append(handle_ship_movement)
-    script.append(handle_shooting)
-    script.append(move_bodies)
-    script.append(handle_offscreen)
-    script.append(handle_ship_above_mothership)
-    script.append(handle_ship_astroids_collision)
-    script.append(handle_bullets_astroids_collision)
-    script.append(handle_mothership_astroids_collision)
-    script.append(spawn_astroids)
-    script.append(play_background_music)
-    script.append(draw_frame)
+    script.append(PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav", audio_service))
+    script.append(DrawFrameAction(1, W_SIZE, background_image, screen_service))
 
     # Give the cast and script to the dirrector by calling direct_scene.
     # direct_scene then runs the main game loop:
