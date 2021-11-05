@@ -1,0 +1,25 @@
+General Requirements:
+- (done) the player controls a space ship that spawns on the bottom and in the middle of the screen
+- (done) the player press UP, DOWN, LEFT, RIGHT keys to move the ship
+- (done) the player press SPACE to shoot bullets
+- (done) astroids continually spawn from the top and destroy the ship if they hit the ship
+- (done) the player tries to dodge or destroy the astroids and make sure the spaceship doesn't get hit
+- The game is over when the player's ship is destroyed
+
+    Extra:
+    - There is a mothership on the bottom of the screen that the player tries to protect
+    - The game is also over when the mothership is destroyed
+
+Astroids:
+- There are 3 types of astroids:
+              + Big, medium, small
+              + Big: Has 5 HP, gives player 5 points when destroyed. Movement speed: slow
+              + Medium: Has 3 HP, gives player 3 points when destroyed. Movement speed: average
+              + Small: Has 1 HP, gives player 1 point when destroyed. Movement speed: fast
+
+Bullets:
+- A bullet is spawn when player hits SPACE.
+- There is an attack interval of 0.35 seconds between 2 consecutive shots
+
+Score:
+- Score is recorded on the top right of the screen

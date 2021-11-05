@@ -1,19 +1,23 @@
-from astroid.script.HandleCollisionsAction import HandleCollisionAction
-from astroid.script.HandleShootingAction import HandleShootingAction
-from astroid.script.PlayBackgroundMusicAction import PlayBackgroundMusicAction
 from genie.director import Director
+from genie.services.PygameAudioService import PygameAudioService
 from genie.services.PygameKeyboardService import PygameKeyboardService
 from genie.services.PygamePhysicsService import PygamePhysicsService
+from genie.services.PygameScreenService import PygameScreenService
 
 from astroid.cast.ship import Ship
 from astroid.cast.background import Background
 from astroid.cast.playerScore import PlayerScore
 
+from astroid.script.HandleQuitAction import HandleQuitAction
 from astroid.script.DrawFrameAction import DrawFrameAction
-from astroid.script.HandleInputAction import HandleInputAction
+from astroid.script.HandleShipMovementAction import HandleShipMovementAction
 from astroid.script.MoveActorsAction import MoveActorsAction
 from astroid.script.SpawnAstroidsAction import SpawnAstroidsAction
 from astroid.script.HandleOffscreenAction import HandleOffscreenAction
+from astroid.script.HandleShipAstroidsCollision import HandleShipAstroidsCollision
+from astroid.script.HandleBulletsAstroidsCollision import HandleBulletsAstroidsCollision
+from astroid.script.HandleShootingAction import HandleShootingAction
+from astroid.script.PlayBackgroundMusicAction import PlayBackgroundMusicAction
 
 W_SIZE = (500, 700)
 START_POSITION = 200, 250
@@ -54,27 +58,37 @@ def main():
     # Create all the actions
     script = []
 
+    # Initialize all services:
+    keyboard_service = PygameKeyboardService()
+    physics_service = PygamePhysicsService()
+    screen_service = PygameScreenService(W_SIZE)
+    audio_service = PygameAudioService()
+
     # Create input actions
-    handle_input = HandleInputAction(1, PygameKeyboardService())
-    handle_shooting = HandleShootingAction(1, PygameKeyboardService())
+    handle_quit_action = HandleQuitAction(1, keyboard_service)
+    handle_ship_movement = HandleShipMovementAction(1, keyboard_service)
+    handle_shooting = HandleShootingAction(1, keyboard_service)
 
     # Create update actions
-    move_bodies = MoveActorsAction(1, PygamePhysicsService())
+    move_bodies = MoveActorsAction(1, physics_service)
     handle_offscreen = HandleOffscreenAction(1, W_SIZE)
-    handle_collision = HandleCollisionAction(1)
-    spawn_astroid = SpawnAstroidsAction(1, W_SIZE)
+    handle_ship_astroids_collision = HandleShipAstroidsCollision(1, physics_service, audio_service)
+    handle_bullets_astroids_collision = HandleBulletsAstroidsCollision(1, physics_service, audio_service)
+    spawn_astroids = SpawnAstroidsAction(1, W_SIZE)
 
     # Create output actions
-    play_background_music = PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav")
-    draw_frame = DrawFrameAction(1, W_SIZE, background_image)
+    play_background_music = PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav", audio_service)
+    draw_frame = DrawFrameAction(1, W_SIZE, background_image, screen_service)
 
     # Give action(s) to the script
-    script.append(handle_input)
+    script.append(handle_quit_action)
+    script.append(handle_ship_movement)
     script.append(handle_shooting)
     script.append(move_bodies)
     script.append(handle_offscreen)
-    script.append(handle_collision)
-    script.append(spawn_astroid)
+    script.append(handle_ship_astroids_collision)
+    script.append(handle_bullets_astroids_collision)
+    script.append(spawn_astroids)
     script.append(play_background_music)
     script.append(draw_frame)
 

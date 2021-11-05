@@ -12,10 +12,17 @@ class HandleOffscreenAction(UpdateAction):
         self._ship = None
     
     def execute(self, actors, actions, clock, callback):
+        """
+            Handle all actors' behavior when they're about to
+            go off the screen
+        """
+        # Look for the ship
         for actor in actors:
             if (isinstance(actor, Ship)):
                 self._ship = actor
                 break
+        
+        # Don't allow the ship to go off the screen
         if (self._ship != None):
             if self._ship.get_x() > self._window_size[0]:
                 self._ship.set_x(self._window_size[0])
@@ -26,6 +33,7 @@ class HandleOffscreenAction(UpdateAction):
             if self._ship.get_y() < 0:
                 self._ship.set_y(0)
         
+        # If it's a bullet or astroid goin off the screen, just remove it.
         for actor in actors:
             if isinstance(actor, Astroid) or isinstance(actor, Bullet):
                 if (actor.get_x() > self._window_size[0]

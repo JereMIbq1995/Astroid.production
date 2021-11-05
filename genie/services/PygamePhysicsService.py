@@ -26,7 +26,26 @@ class PygamePhysicsService:
                 .colliderect(
                 self._get_rectangle(actor2)
                 )
-        
+    
+    def check_collision_list(self, target: Actor, actors: list):
+        """
+            return the first actor in the actors list that collides with target
+            If target doesn't collide with any of the actors, return -1
+        """
+        for actor in actors:
+            if self._get_rectangle(target).colliderect(self._get_rectangle(actor)):
+                return actor
+        return -1
+    
+    def check_collision_all(self, target: Actor, actors: list):
+        """
+            return True if target collides with all of the actors
+                    False if there's 1 actor that doesn't collide with target
+        """
+        for actor in actors:
+            if not self._get_rectangle(target).colliderect(self._get_rectangle(actor)):
+                return False
+        return True
 
     def is_above(self, actor1 : Actor, actor2 : Actor):
         """

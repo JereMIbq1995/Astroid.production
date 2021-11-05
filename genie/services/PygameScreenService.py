@@ -74,6 +74,19 @@ class PygameScreenService:
     def draw_text(self, text : str, font : str = None, font_size : int = 24, 
                     color : tuple = (0, 0, 0), position : tuple = (0, 0),
                     antialias : bool = True):
+        """
+            Draw the input text (str).
+            Inputs:
+                - text: The text you want to draw
+                - font: The font you want to use (try to find out what's
+                        available on your system first)
+                - font_size: default is 24
+                - color: An RGB tuple. (0,0,0) is BLACK, and (255,255,255) is WHITE
+                        You can also pass a 4 entries tuple. the 4th entry determines opacity
+                - position: A tuple in the form of (x, y)
+                - antialias: Boolean. Default is True
+
+        """
         font = pygame.font.SysFont(font, font_size)
         text_image = font.render(text, antialias, color)
         self._window.blit(text_image, position)
@@ -83,7 +96,21 @@ class PygameScreenService:
                         border_top_right_radius : int = -1, border_bottom_left_radius : int = -1, 
                         border_bottom_right_radius : int = -1):
         """
-            Draw a rectangle at the specified position
+            Draw a rectangle.
+
+            Input:
+                - center: An (x, y) tuple indicating the center of the rectangle
+                - width: the width of the rectangle
+                - height: the height of the rectangle
+                - color: An RGB tuple. (0,0,0) is BLACK, and (255,255,255) is WHITE
+                        You can also pass a 4 entries tuple. the 4th entry determines opacity
+                - border_width: how many pixels you want the border to be
+                
+                - border_radius, border_..._radius: use these parameters if you want your rectangle
+                                     to have rounded corners.
+                                        + values < 1 means squared corners
+                                        + values >= 1 means rounded corners. Increase this
+                                            to increase the roundness
         """
         pygame.draw.rect(self._window, color, pygame.Rect(center[0] - width / 2, center[1] - height / 2, width, height),
                         border_width, border_radius, border_top_left_radius, border_top_right_radius, border_bottom_left_radius,
@@ -93,29 +120,19 @@ class PygameScreenService:
                     draw_top_right : bool = False, draw_top_left : bool = False, draw_bottom_left : bool = False, 
                     draw_bottom_right : bool = False):
         """
-            Draw a circle at the specified position
+            Draw a circle.
+
+            Input:
+                - center: A tuple represents center of the circle (x, y)
+                - radius: Well...
+                - color: RGB tuple (0,0,0) is BLACK, (255,255,255) is WHITE.
+                        Can also use 4th entry to specify opacity
+                - width: How bold you want the border of the circle to be
+
+                - draw_top_..., draw_bottom_...: Boolean. Use these parameters if want to draw
+                    only parts of the circle (top left, top right, bottom left, bottom right)
         """
         pygame.draw.circle(self._window, color, center, radius, width, draw_top_right, draw_top_left, draw_bottom_left, draw_bottom_right)
-
-    # def draw_frame(self, actors, background_color = WHITE, lerp : float = 0):
-    #     """
-    #         Takes in a list of actors and a background image, then:
-    #             - First, fill the screen with the background_color provided (default is WHITE)
-    #             - Draw all the actors in the "actors" list in order:
-    #                 First thing in the list gets drawn first.
-    #             - Update display to show all the drawing.
-                
-    #             Note:
-    #                 - If there is a background image, it should be the first thing
-    #                     on the list, otherwise it might be drawn on top of other
-    #                     actors, causing them to be hidden
-    #                 - The background_color provided might not be seen if there's an actor
-    #                     (most likely the background image) drawn on top of it.
-    #     """
-    #     # self._draw_background(color, background_image)
-    #     self._window.fill(background_color)
-    #     self.draw_actors(actors, lerp)
-    #     pygame.display.update()
     
     def draw_actors(self, actors : list, lerp : float = 0):
         """
@@ -146,10 +163,11 @@ class PygameScreenService:
                 # Draw the image with pygame
                 self._window.blit(transformed_image, image_topleft)
 
-                # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(actor_topleft[0], actor_topleft[1], actor.get_width(), actor.get_height()), width = 5)
-                # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(image_topleft[0], image_topleft[1], transformed_image.get_width(), transformed_image.get_height()), width = 5)
+                # The following lines of code when un-comment show the hit box of the actor AND the boundary of the image (the 2 are different)
+                pygame.draw.rect(self._window, (0,0,0), pygame.Rect(actor_topleft[0], actor_topleft[1], actor.get_width(), actor.get_height()), width = 5)
+                pygame.draw.rect(self._window, (0,0,0), pygame.Rect(image_topleft[0], image_topleft[1], transformed_image.get_width(), transformed_image.get_height()), width = 5)
             except:
-                print("Could not load image!")
+                pass
         
         
 
