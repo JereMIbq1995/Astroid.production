@@ -16,6 +16,7 @@ SMALL = 3
 class SpawnAstroidsAction(UpdateAction):
     def __init__(self, priority, window_size):
         super().__init__(priority)
+        # self._spawned = False
         self._last_spawn = time.time() # seconds
         self._window_size = window_size
         self._astroid_spawn = False
@@ -28,30 +29,39 @@ class SpawnAstroidsAction(UpdateAction):
         if type == LARGE:
             vel_x = -1 if x > self._window_size[0] / 2 else 1
             vel_y = 3
-            return Astroid("astroid/assets/astroids/astroid_large.png", 
-                            *LARGE_SIZE,
+            return Astroid("astroid/assets/astroids/astroid_large.png",
+                            health_bar_y_offset=LARGE_SIZE[1]/2+5,
+                            health_bar_height=5,
+                            width = LARGE_SIZE[0],
+                            height = LARGE_SIZE[1],
                             x = x, y = y,
                             vx = vel_x, vy = vel_y,
                             rotation_vel=1,
-                            points=5, max_hp=5)
+                            points=5, max_hp=5, show_text_health=True)
         elif type == MEDIUM:
             vel_x = -2 if x > self._window_size[0] / 2 else 2
             vel_y = 6
             return Astroid("astroid/assets/astroids/astroid_med.png",
-                            *MEDIUM_SIZE, 
+                            health_bar_y_offset=MEDIUM_SIZE[1]/2+5,
+                            health_bar_height=5,
+                            width = MEDIUM_SIZE[0],
+                            height = MEDIUM_SIZE[1],
                             x = x, y = y,
                             vx = vel_x, vy = vel_y,
                             rotation_vel=1,
-                            points=3, max_hp=3)
+                            points=3, max_hp=3, show_text_health=True)
         elif type == SMALL:
             vel_x = -3 if x > self._window_size[0] / 2 else 3
             vel_y = 8
             return Astroid("astroid/assets/astroids/astroid_small.png",
-                            *SMALL_SIZE,
+                            health_bar_y_offset=SMALL_SIZE[1]/2+5,
+                            health_bar_height=5,
+                            width = SMALL_SIZE[0],
+                            height = SMALL_SIZE[1],
                             x = x, y = y,
                             vx = vel_x, vy = vel_y,
                             rotation_vel=1,
-                            points=1, max_hp=1)
+                            points=1, max_hp=1, show_text_health=True)
 
     def execute(self, actors, actions, clock, callback):
         """

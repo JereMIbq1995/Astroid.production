@@ -10,6 +10,10 @@ General Requirements:
     - There is a mothership on the bottom of the screen that the player tries to protect
     - The game is also over when the mothership is destroyed
 
+Ship:
+- Can shoot bullets
+- Destroyed immediately if hit an astroid
+
 Astroids:
 - There are 3 types of astroids:
               + Big, medium, small
@@ -20,6 +24,11 @@ Astroids:
 Bullets:
 - A bullet is spawn when player hits SPACE.
 - There is an attack interval of 0.35 seconds between 2 consecutive shots
+
+Mothership:
+- Starts out with 50 HP
+- If hit by an astroid, takes damage equal to the remaining HP of that astroid
+    (So if it's hit by a full HP Big astroid, it will take 5 damage)
 
 Score:
 - Score is recorded on the top right of the screen

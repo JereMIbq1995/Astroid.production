@@ -1,3 +1,4 @@
+from astroid.script.HandleMothershipAstroidsCollision import HandleMothershipAstroidsCollision
 from genie.director import Director
 from genie.services.PygameAudioService import PygameAudioService
 from genie.services.PygameKeyboardService import PygameKeyboardService
@@ -5,6 +6,7 @@ from genie.services.PygamePhysicsService import PygamePhysicsService
 from genie.services.PygameScreenService import PygameScreenService
 
 from astroid.cast.ship import Ship
+from astroid.cast.mothership import MotherShip
 from astroid.cast.background import Background
 from astroid.cast.playerScore import PlayerScore
 
@@ -14,6 +16,7 @@ from astroid.script.HandleShipMovementAction import HandleShipMovementAction
 from astroid.script.MoveActorsAction import MoveActorsAction
 from astroid.script.SpawnAstroidsAction import SpawnAstroidsAction
 from astroid.script.HandleOffscreenAction import HandleOffscreenAction
+from astroid.script.HandleShipAboveMotherShipAction import HandleShipAboveMotherShipAction
 from astroid.script.HandleShipAstroidsCollision import HandleShipAstroidsCollision
 from astroid.script.HandleBulletsAstroidsCollision import HandleBulletsAstroidsCollision
 from astroid.script.HandleShootingAction import HandleShootingAction
@@ -32,13 +35,28 @@ def main():
     # Create all the actors, including the player
     cast = []
 
+    # Create Mothership:
+    mother_ship = MotherShip(path="astroid/assets/mother_ship.png",
+                            health_bar_y_offset= (int(W_SIZE[0] / 5.7) / 2) - 10,
+                            health_bar_height=20,
+                            width=W_SIZE[0],
+                            height=int(W_SIZE[0] / 5.7),
+                            x= W_SIZE[0]/2,
+                            y= W_SIZE[1]-int(W_SIZE[0] / 5.7)/2,
+                            max_hp=50,
+                            show_text_health=True)
+                            
     # Create the player
     player = Ship(path="astroid/assets/spaceship/spaceship_yellow.png", 
                     width = 70,
                     height = 50,
                     x = W_SIZE[0]/2,
-                    y = W_SIZE[1]/10 * 9,
+                    # y = W_SIZE[1]/10 * 9,
+                    y = mother_ship.get_top_left()[1] - 30,
                     rotation=180)
+    
+    
+
     # Scale the background to have the same dimensions as the Window,
     # then position it at the center of the screen
     background_image = Background("astroid/assets/space.png", 
@@ -53,6 +71,7 @@ def main():
     # be drawn on top of other actors.
     cast.append(background_image)
     cast.append(player)
+    cast.append(mother_ship)
     cast.append(score)
 
     # Create all the actions
@@ -72,8 +91,10 @@ def main():
     # Create update actions
     move_bodies = MoveActorsAction(1, physics_service)
     handle_offscreen = HandleOffscreenAction(1, W_SIZE)
+    handle_ship_above_mothership = HandleShipAboveMotherShipAction(1, W_SIZE)
     handle_ship_astroids_collision = HandleShipAstroidsCollision(1, physics_service, audio_service)
     handle_bullets_astroids_collision = HandleBulletsAstroidsCollision(1, physics_service, audio_service)
+    handle_mothership_astroids_collision = HandleMothershipAstroidsCollision(1, physics_service, audio_service)
     spawn_astroids = SpawnAstroidsAction(1, W_SIZE)
 
     # Create output actions
@@ -86,8 +107,10 @@ def main():
     script.append(handle_shooting)
     script.append(move_bodies)
     script.append(handle_offscreen)
+    script.append(handle_ship_above_mothership)
     script.append(handle_ship_astroids_collision)
     script.append(handle_bullets_astroids_collision)
+    script.append(handle_mothership_astroids_collision)
     script.append(spawn_astroids)
     script.append(play_background_music)
     script.append(draw_frame)

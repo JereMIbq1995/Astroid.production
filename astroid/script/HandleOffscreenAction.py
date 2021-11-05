@@ -1,5 +1,6 @@
 
 from astroid.cast.astroid import Astroid
+from astroid.cast.mothership import MotherShip
 from astroid.cast.ship import Ship
 from astroid.cast.bullet import Bullet
 
@@ -10,17 +11,18 @@ class HandleOffscreenAction(UpdateAction):
         super().__init__(priority)
         self._window_size = window_size
         self._ship = None
+        self._mother_ship = None
     
     def execute(self, actors, actions, clock, callback):
         """
             Handle all actors' behavior when they're about to
             go off the screen
         """
-        # Look for the ship
-        for actor in actors:
-            if (isinstance(actor, Ship)):
-                self._ship = actor
-                break
+        # Look for the ship and mother ship
+        if (self._ship == None):
+            for actor in actors:
+                if isinstance(actor, Ship):
+                    self._ship = actor
         
         # Don't allow the ship to go off the screen
         if (self._ship != None):

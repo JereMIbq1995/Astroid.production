@@ -11,7 +11,7 @@ from astroid.cast.bullet import Bullet
 VEL = 4
 BULLET_VX = 0
 BULLET_VY = -10
-ATTACK_INTERVAL = 0.35   # seconds
+ATTACK_INTERVAL = 0.25   # seconds
 
 class HandleShootingAction(InputAction):
     def __init__(self, priority, keyboard_service):
@@ -44,6 +44,10 @@ class HandleShootingAction(InputAction):
             self._last_bullet_spawn = time.time()
 
     def _get_ship(self, actors):
+        """
+            Look through the actors and return the ship.
+            Returns None if Ship is not in the list.
+        """
         for actor in actors:
             if(isinstance(actor, Ship)):
                 return actor
