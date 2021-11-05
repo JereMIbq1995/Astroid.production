@@ -1,4 +1,3 @@
-from astroid.script.HandleMothershipAstroidsCollision import HandleMothershipAstroidsCollision
 from genie.director import Director
 from genie.services.PygameAudioService import PygameAudioService
 from genie.services.PygameKeyboardService import PygameKeyboardService
@@ -11,16 +10,22 @@ from astroid.cast.background import Background
 from astroid.cast.playerScore import PlayerScore
 
 from astroid.script.HandleQuitAction import HandleQuitAction
-from astroid.script.DrawFrameAction import DrawFrameAction
 from astroid.script.HandleShipMovementAction import HandleShipMovementAction
+from astroid.script.HandleShootingAction import HandleShootingAction
+
 from astroid.script.MoveActorsAction import MoveActorsAction
 from astroid.script.SpawnAstroidsAction import SpawnAstroidsAction
 from astroid.script.HandleOffscreenAction import HandleOffscreenAction
 from astroid.script.HandleShipAboveMotherShipAction import HandleShipAboveMotherShipAction
 from astroid.script.HandleShipAstroidsCollision import HandleShipAstroidsCollision
 from astroid.script.HandleBulletsAstroidsCollision import HandleBulletsAstroidsCollision
-from astroid.script.HandleShootingAction import HandleShootingAction
+from astroid.script.HandleMothershipAstroidsCollision import HandleMothershipAstroidsCollision
 from astroid.script.PlayBackgroundMusicAction import PlayBackgroundMusicAction
+
+from astroid.script.DrawActorsAction import DrawActorsAction
+from astroid.script.DrawHealthBarsAction import DrawHealthBarsAction
+from astroid.script.DrawScoreAction import DrawScoreAction
+from astroid.script.UpdateScreenAction import UpdateScreenAction
 
 W_SIZE = (500, 700)
 START_POSITION = 200, 250
@@ -99,7 +104,10 @@ def main():
 
     # Create output actions
     script.append(PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav", audio_service))
-    script.append(DrawFrameAction(1, W_SIZE, background_image, screen_service))
+    script.append(DrawActorsAction(1, screen_service))
+    script.append(DrawHealthBarsAction(1, screen_service))
+    script.append(DrawScoreAction(1, screen_service))
+    script.append(UpdateScreenAction(2, screen_service))
 
     # Give the cast and script to the dirrector by calling direct_scene.
     # direct_scene then runs the main game loop:
