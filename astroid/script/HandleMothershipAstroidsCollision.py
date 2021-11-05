@@ -11,17 +11,20 @@ class HandleMothershipAstroidsCollision(UpdateAction):
         self._physics_service = physics_service
         self._audio_service = audio_service               
 
+    def _get_mother_ship(self, actors):
+        for actor in actors:
+            if (isinstance(actor, MotherShip)):
+                return actor
+        return None
+
     def execute(self, actors, actions, clock, callback):
         """
             This action handles all collisions between the SHIP and the ASTROIDS
         """
         # First look for the ship
-        if (self._mother_ship == None):
-            for actor in actors:
-                if (isinstance(actor, MotherShip)):
-                    self._mother_ship = actor
+        self._mother_ship = self._get_mother_ship(actors)
 
-        # Only worry about collision if the ship actually exists
+        # Only worry about collision if the mothership actually exists
         if self._mother_ship != None:
             # Look through all the astroids, see if any collides with ship
             for actor in actors:

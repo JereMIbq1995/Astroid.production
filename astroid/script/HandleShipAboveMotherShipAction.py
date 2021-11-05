@@ -35,7 +35,7 @@ class HandleShipAboveMotherShipAction(UpdateAction):
         # Determine the line between ship an mothership:
             line = self._mother_ship.get_top_left()[1] - self._ship.get_height()/2
 
-            # Don't allow the ship to go off the screen
+            # Don't allow the ship to go into the mothership
             if (self._ship != None and self._ship.get_y() > line):
-                    self._ship.set_y(line)
+                self._ship.set_y(line)
             
