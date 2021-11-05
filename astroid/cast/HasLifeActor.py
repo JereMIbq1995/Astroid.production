@@ -1,4 +1,3 @@
-from astroid.cast.healthbar import HealthBar
 from genie.cast.actor import Actor
 
 class HasLifeActor(Actor):
