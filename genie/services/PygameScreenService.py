@@ -73,7 +73,7 @@ class PygameScreenService:
 
     def draw_text(self, text : str, font : str = None, font_size : int = 24, 
                     color : tuple = (0, 0, 0), position : tuple = (0, 0),
-                    antialias : bool = True):
+                    antialias : bool = True, position_center : bool = False):
         """
             Draw the input text (str).
             Inputs:
@@ -85,11 +85,18 @@ class PygameScreenService:
                         You can also pass a 4 entries tuple. the 4th entry determines opacity
                 - position: A tuple in the form of (x, y)
                 - antialias: Boolean. Default is True
+                - position_center: A boolean that tells whether the position given should be
+                                    the center of the text image or the top-left corner.
+                        + True: treats the position as the center of the text image
+                        + False: treats the position as the top-left corner of the text image
 
         """
         font = pygame.font.SysFont(font, font_size)
         text_image = font.render(text, antialias, color)
-        self._window.blit(text_image, position)
+        txt_img_position = position
+        if (position_center):
+            txt_img_position = (position[0] - text_image.get_width()/2, position[1] - text_image.get_height()/2)
+        self._window.blit(text_image, txt_img_position)
 
     def draw_rectangle(self, center : Tuple, width : int, height: int, color : tuple = (0, 0, 0), 
                         border_width : int = 0, border_radius : int = 0, border_top_left_radius : int = -1,
@@ -164,8 +171,8 @@ class PygameScreenService:
                 self._window.blit(transformed_image, image_topleft)
 
                 # The following lines of code when un-comment show the hit box of the actor AND the boundary of the image (the 2 are different)
-                pygame.draw.rect(self._window, (0,0,0), pygame.Rect(actor_topleft[0], actor_topleft[1], actor.get_width(), actor.get_height()), width = 5)
-                pygame.draw.rect(self._window, (0,0,0), pygame.Rect(image_topleft[0], image_topleft[1], transformed_image.get_width(), transformed_image.get_height()), width = 5)
+                # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(actor_topleft[0], actor_topleft[1], actor.get_width(), actor.get_height()), width = 5)
+                # pygame.draw.rect(self._window, (0,0,0), pygame.Rect(image_topleft[0], image_topleft[1], transformed_image.get_width(), transformed_image.get_height()), width = 5)
             except:
                 pass
         
