@@ -20,14 +20,21 @@ Astroids:
               + Big: Has 5 HP, gives player 5 points when destroyed. Movement speed: slow
               + Medium: Has 3 HP, gives player 3 points when destroyed. Movement speed: average
               + Small: Has 1 HP, gives player 1 point when destroyed. Movement speed: fast
+- (Done) Each astroid has a health bar with width = astroid's width, height = 5px.
+    The health bar only shows on the bottom of the astroid if HP is less than 100%
 
 
 Bullets:
 - (Done) A bullet is spawn when player hits SPACE.
 - (Done) There is an attack interval of 0.25 seconds between 2 consecutive shots
+- (Done) Each bullet deals 1 damage (-1hp) to an astroid
 
 Mothership:
 - (Done) Starts out with 50 HP
+- (Done) The Mothership has a healthbar that has the same width as itself and height of 20pixels.
+    There is also a text representation of the Mothership's health in the middle of the health bar.
+    The healthbar is located on the bottom of the screen.
+    The healthbar only shows when HP < 100%.
 - (Done) If hit by an astroid, takes damage equal to the remaining HP of that astroid
     (So if it's hit by a full HP Big astroid, it will take 5 damage)
 - Takes 20 seconds to power up a very powerful blast that launches when the player hits ENTER.
