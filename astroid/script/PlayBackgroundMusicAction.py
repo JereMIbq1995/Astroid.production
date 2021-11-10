@@ -1,5 +1,4 @@
 from genie.script.action import OutputAction
-from genie.services.PygameAudioService import PygameAudioService
 
 class PlayBackgroundMusicAction(OutputAction):
     def __init__(self, priority, path, audio_service):

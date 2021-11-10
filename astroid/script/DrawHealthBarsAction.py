@@ -1,6 +1,6 @@
 from astroid.cast.HasLifeActor import HasLifeActor
 from genie.script.action import OutputAction
-from genie.services.PygameScreenService import WHITE
+from genie.services import colors
 
 class DrawHealthBarsAction(OutputAction):
     def __init__(self, priority, screen_service):
@@ -50,6 +50,6 @@ class DrawHealthBarsAction(OutputAction):
                 # center of the health bar
                 if actor.show_text_health():
                     self._screen_service.draw_text(str(actor.get_hp()) + "/" + str(actor.get_max_hp()),
-                                                    font_size= actor.get_health_bar_height(), color = WHITE,
+                                                    font_size= actor.get_health_bar_height(), color = colors.WHITE,
                                                     position = (actor.get_x(), actor.get_y()+actor.get_health_bar_y_offset()),
                                                     position_center=True)

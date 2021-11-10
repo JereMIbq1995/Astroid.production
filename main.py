@@ -1,8 +1,5 @@
 from genie.director import Director
-from genie.services.PygameAudioService import PygameAudioService
-from genie.services.PygameKeyboardService import PygameKeyboardService
-from genie.services.PygamePhysicsService import PygamePhysicsService
-from genie.services.PygameScreenService import PygameScreenService
+from genie.services import *
 
 from astroid.cast.ship import Ship
 from astroid.cast.mothership import MotherShip
@@ -91,7 +88,7 @@ def main():
     # Create input actions
     script.append(HandleQuitAction(1, keyboard_service))
     script.append(HandleShipMovementAction(1, keyboard_service))
-    script.append(HandleShootingAction(1, keyboard_service))
+    script.append(HandleShootingAction(1, keyboard_service, audio_service))
 
     # Create update actions
     script.append(MoveActorsAction(1, physics_service))

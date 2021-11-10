@@ -1,9 +1,7 @@
 import time
 
 from genie.script.action import InputAction
-from genie.services.PygameKeyboardService import PygameKeyboardService
-from genie.services.PygameAudioService import PygameAudioService
-from genie.services.constants import keys
+from genie.services import keys
 
 from astroid.cast.ship import Ship
 from astroid.cast.bullet import Bullet
@@ -14,12 +12,12 @@ BULLET_VY = -10
 ATTACK_INTERVAL = 0.25   # seconds
 
 class HandleShootingAction(InputAction):
-    def __init__(self, priority, keyboard_service):
+    def __init__(self, priority, keyboard_service, audio_service):
         super().__init__(priority)
         self._ship = None
         self._last_bullet_spawn = time.time()  # seconds
         self._keyboard_service = keyboard_service
-        self._audio_service = PygameAudioService()
+        self._audio_service = audio_service
     
     def _spawn_bullet(self, clock, callback):
         """
