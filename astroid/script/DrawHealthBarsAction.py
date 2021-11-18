@@ -49,6 +49,7 @@ class DrawHealthBarsAction(OutputAction):
                 # If that actor wants to show health in text, draw it at the
                 # center of the health bar
                 if actor.show_text_health():
+                    # color = colors.WHITE if actor.get_hp_percent() > 0.5 else colors.BLACK
                     self._screen_service.draw_text(str(actor.get_hp()) + "/" + str(actor.get_max_hp()),
                                                     font_size= actor.get_health_bar_height(), color = colors.WHITE,
                                                     position = (actor.get_x(), actor.get_y()+actor.get_health_bar_y_offset()),
