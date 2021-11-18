@@ -37,13 +37,13 @@ class DrawHealthBarsAction(OutputAction):
 
                 # Draw the health (red) portion
                 self._screen_service.draw_rectangle(center=(center_x, center_y), width=health_width, 
-                                                    height= health_height, color = (255, 0, 0),
+                                                    height= health_height, color = colors.RED,
                                                     border_width=0)
 
                 # Draw the empty (grey) portion
                 # (The height of the empty bar should be the same as health_height)
                 self._screen_service.draw_rectangle(center=(empty_bar_x,empty_bar_y), width=empty_bar_width, 
-                                                    height= health_height, color = (160, 160, 160),
+                                                    height= health_height, color = colors.GRAY,
                                                     border_width=0)
                 
                 # If that actor wants to show health in text, draw it at the

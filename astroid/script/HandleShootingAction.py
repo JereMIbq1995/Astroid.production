@@ -59,5 +59,5 @@ class HandleShootingAction(InputAction):
         self._ship = self._get_ship(actors)
         
         # If Space is pressed, spawn a bullet
-        if self._keyboard_service.is_key_pressed(keys.SPACE):
+        if self._keyboard_service.is_key_down(keys.SPACE):
             self._spawn_bullet(clock, callback)
