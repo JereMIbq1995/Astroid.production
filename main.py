@@ -5,10 +5,12 @@ from astroid.cast.ship import Ship
 from astroid.cast.mothership import MotherShip
 from astroid.cast.background import Background
 from astroid.cast.playerScore import PlayerScore
+from astroid.cast.startGameButton import StartGameButton
 
 from astroid.script.HandleQuitAction import HandleQuitAction
 from astroid.script.HandleShipMovementAction import HandleShipMovementAction
 from astroid.script.HandleShootingAction import HandleShootingAction
+from astroid.script.HandleStartGameAction import HandleStartGameAction
 
 from astroid.script.MoveActorsAction import MoveActorsAction
 from astroid.script.SpawnAstroidsAction import SpawnAstroidsAction
@@ -55,9 +57,7 @@ def main():
                     x = W_SIZE[0]/2,
                     # y = W_SIZE[1]/10 * 9,
                     y = mother_ship.get_top_left()[1] - 30,
-                    rotation=180)
-    
-    
+                    rotation=180)    
 
     # Scale the background to have the same dimensions as the Window,
     # then position it at the center of the screen
@@ -68,6 +68,13 @@ def main():
                                     y = W_SIZE[1]/2)
 
     score = PlayerScore(path="", score=0)
+    
+    # Start game button
+    start_button = StartGameButton(path="astroid/assets/others/start_button.png",
+                                    width = 305,
+                                    height = 113,
+                                    x = W_SIZE[0]/2,
+                                    y = W_SIZE[1]/2)
 
     # Give actor(s) to the cast. Append the background first so that it won't
     # be drawn on top of other actors.
@@ -75,6 +82,7 @@ def main():
     cast.append(player)
     cast.append(mother_ship)
     cast.append(score)
+    cast.append(start_button)
 
     # Create all the actions
     script = []
@@ -92,16 +100,25 @@ def main():
         physics_service = PygamePhysicsService()
         screen_service = PygameScreenService(W_SIZE)
         audio_service = PygameAudioService()
+        mouse_service = PygameMouseService()
     elif int(service_code) == 2:
         keyboard_service = RaylibKeyboardService()
         physics_service = RaylibPhysicsService()
         screen_service = RaylibScreenService(W_SIZE)
         audio_service = RaylibAudioService()
+        mouse_service = RaylibMouseService()
 
     # Create input actions
     script.append(HandleQuitAction(1, keyboard_service))
-    script.append(HandleShipMovementAction(1, keyboard_service))
-    script.append(HandleShootingAction(1, keyboard_service, audio_service))
+
+    # Add actions that must be added to the script when the game starts
+    startgame_actions = []
+    startgame_actions.append(HandleShootingAction(1, keyboard_service, audio_service))
+    startgame_actions.append(HandleShipMovementAction(2, keyboard_service))
+    startgame_actions.append(SpawnAstroidsAction(1, W_SIZE))
+    script.append(HandleStartGameAction(2, mouse_service, physics_service, startgame_actions))
+    # script.append(HandleShipMovementAction(1, keyboard_service))
+    # script.append(HandleShootingAction(1, keyboard_service, audio_service))
 
     # Create update actions
     script.append(MoveActorsAction(1, physics_service))
@@ -110,7 +127,7 @@ def main():
     script.append(HandleShipAstroidsCollision(1, physics_service, audio_service))
     script.append(HandleBulletsAstroidsCollision(1, physics_service, audio_service))
     script.append(HandleMothershipAstroidsCollision(1, physics_service, audio_service))
-    script.append(SpawnAstroidsAction(1, W_SIZE))
+    # script.append(SpawnAstroidsAction(1, W_SIZE))
 
     # Create output actions
     script.append(PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav", audio_service))
