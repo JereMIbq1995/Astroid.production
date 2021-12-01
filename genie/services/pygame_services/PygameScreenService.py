@@ -20,11 +20,12 @@ class PygameScreenService:
                 convert image data to what pygame needs
                 use pygame to draw
     """
-    def __init__(self, window_size):
+    def __init__(self, window_size, title : str = ""):
         if not pygame.get_init():
             pygame.init()
         self._images_cache = {}
         self._window = pygame.display.set_mode(window_size)
+        pygame.display.set_caption(title)
     
     def initialize(self):
         pass

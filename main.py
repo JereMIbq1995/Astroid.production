@@ -98,13 +98,13 @@ def main():
     if int(service_code) == 1:
         keyboard_service = PygameKeyboardService()
         physics_service = PygamePhysicsService()
-        screen_service = PygameScreenService(W_SIZE)
+        screen_service = PygameScreenService(W_SIZE, "Asteroid")
         audio_service = PygameAudioService()
         mouse_service = PygameMouseService()
     elif int(service_code) == 2:
         keyboard_service = RaylibKeyboardService()
         physics_service = RaylibPhysicsService()
-        screen_service = RaylibScreenService(W_SIZE)
+        screen_service = RaylibScreenService(W_SIZE, "Asteroid")
         audio_service = RaylibAudioService()
         mouse_service = RaylibMouseService()
 
