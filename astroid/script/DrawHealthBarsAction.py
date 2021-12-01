@@ -17,7 +17,7 @@ class DrawHealthBarsAction(OutputAction):
         """
             Look at all the actors that "has life", draw their health bars
         """
-        for actor in actors:
+        for actor in actors.get_all_actors():
             if isinstance(actor, HasLifeActor) and actor.get_hp_percent() < 1:
                 
                 # Figure out dimensions of the health portion of the hp bar

@@ -15,13 +15,13 @@ class HandleShipAboveMotherShipAction(UpdateAction):
     
     def _get_ship_and_mother_ship(self, actors):
         # Look for the ship and mother ship
-        self._ship = None
-        self._mother_ship = None
-        for actor in actors:
-            if isinstance(actor, Ship):
-                self._ship = actor
-            if isinstance(actor, MotherShip):
-                self._mother_ship = actor
+        self._ship = actors.get_first_actor("ship")
+        self._mother_ship = actors.get_first_actor("mother_ship")
+        # for actor in actors:
+        #     if isinstance(actor, Ship):
+        #         self._ship = actor
+        #     if isinstance(actor, MotherShip):
+        #         self._mother_ship = actor
 
     def execute(self, actors, actions, clock, callback):
         """
