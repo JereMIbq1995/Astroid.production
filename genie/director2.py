@@ -2,7 +2,7 @@ from .cast.cast import Cast
 from .script.script import Script
 from .script.action import Action
 from .clock import Clock
-
+import time
 class Director(Action.Callback):
     def __init__(self):
         self._cast = Cast()
@@ -14,10 +14,17 @@ class Director(Action.Callback):
         self._cast = cast
         self._script = script
         self._is_directing = True
+        # time1 = time.time()
+        # frame_counter = 0
         while self._is_directing:
+            # frame_counter += 1
             self._do_inputs()
             self._do_updates()
             self._do_outputs()
+            # if time.time() - time1 >= 1:
+            #     print(frame_counter)
+            #     frame_counter = 0
+            #     time1 = time.time()
 
     def on_stop(self):
         self._is_directing = False
