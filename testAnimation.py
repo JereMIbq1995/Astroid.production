@@ -9,15 +9,15 @@ from genie.script.action import Action
 
 from genie.director2 import Director
 
-from script.HandleQuitAction import HandleQuitAction
-from script.HandleShipMovementAction import HandleShipMovementAction
-from script.HandleFrogAttackAction import HandleFrogAttackAction
-from script.HandleFrogMovementAction import HandleFrogMovementAction
+from testAnime.HandleQuitAction import HandleQuitAction
+from testAnime.HandleShipMovementAction import HandleShipMovementAction
+from testAnime.HandleFrogAttackAction import HandleFrogAttackAction
+from testAnime.HandleFrogMovementAction import HandleFrogMovementAction
 
-from script.MoveActorAction import MoveActorsAction
+from testAnime.MoveActorAction import MoveActorsAction
 
-from script.DrawActorsAction import DrawActorsAction
-from script.UpdateScreenAction import UpdateScreenAction
+from testAnime.DrawActorsAction import DrawActorsAction
+from testAnime.UpdateScreenAction import UpdateScreenAction
 
 W_SIZE = (500, 700)
 MAX_FPS = 120
@@ -50,7 +50,7 @@ def main():
     script = Script()
 
     # For now there's only the ship in the cast
-    cast.add_actor("ship", Actor(path="assets/spaceship/spaceship_yellow.png", 
+    cast.add_actor("ship", Actor(path="astroid/assets/spaceship/spaceship_yellow.png", 
                     width = 70,
                     height = 50,
                     x = W_SIZE[0]/2,
@@ -62,7 +62,7 @@ def main():
     frog_animations = []
     for i in range(1, 11):
         file_index = "0" + str(i) if i < 10 else str(i)
-        frog_animations.append(f"assets/frog/frame_{file_index}.png")
+        frog_animations.append(f"testAnime/assets/frog/frame_{file_index}.png")
         # print(f"assets/frog/frame_{file_index}.png")
     cast.add_actor("frog", AnimatedActor(frog_animations, 256, 128, 30, MAX_FPS, True, W_SIZE[0]/2, W_SIZE[1]/2))
     cast.add_actor("frog", AnimatedActor(frog_animations, 256, 128, 30, MAX_FPS, False, W_SIZE[0]/3, W_SIZE[1]/3))
