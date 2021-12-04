@@ -1,5 +1,4 @@
 
-from astroid.cast.astroid import Astroid
 from astroid.cast.mothership import MotherShip
 
 from genie.script.action import UpdateAction

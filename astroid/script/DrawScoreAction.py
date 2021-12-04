@@ -1,4 +1,3 @@
-from astroid.cast.playerScore import PlayerScore
 from genie.script.action import OutputAction
 from genie.services import colors
 
