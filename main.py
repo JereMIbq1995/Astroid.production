@@ -33,6 +33,7 @@ START_POSITION = 200, 250
 SHIP_WIDTH = 40
 SHIP_LENGTH = 55
 SCREEN_TITLE = "Asteroids"
+FPS = 120
 
 def get_services():
     """
@@ -52,7 +53,8 @@ def get_services():
     return {
         "keyboard" : PygameKeyboardService() if service_code == 1 else RaylibKeyboardService(),
         "physics" : PygamePhysicsService() if service_code == 1 else RaylibPhysicsService(),
-        "screen" : PygameScreenService(W_SIZE, SCREEN_TITLE) if service_code == 1 else RaylibScreenService(W_SIZE, SCREEN_TITLE),
+        "screen" : PygameScreenService(W_SIZE, SCREEN_TITLE, FPS) if service_code == 1 \
+                    else RaylibScreenService(W_SIZE, SCREEN_TITLE, FPS),
         "audio" : PygameAudioService() if service_code == 1 else RaylibAudioService(),
         "mouse" : PygameMouseService() if service_code == 1 else RaylibMouseService()
     }

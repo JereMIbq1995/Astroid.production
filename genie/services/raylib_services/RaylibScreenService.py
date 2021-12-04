@@ -46,7 +46,7 @@ class RaylibScreenService:
         #     print("window initialized!")
         init_window(window_size[0], window_size[1], title)
         self._textures_cache = {}
-        self._fps = 60
+        self.set_fps(fps)
     
     def initialize(self):
         pass
@@ -74,6 +74,7 @@ class RaylibScreenService:
             self._load_texture(actor)
     
     def set_fps(self, fps : int = 60):
+        self._fps = fps
         set_target_fps(fps)
 
     def begin_drawing(self):
