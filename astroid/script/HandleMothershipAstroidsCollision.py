@@ -8,13 +8,7 @@ class HandleMothershipAstroidsCollision(UpdateAction):
         self._priority = priority
         self._mother_ship = None
         self._physics_service = physics_service
-        self._audio_service = audio_service               
-
-    def _get_mother_ship(self, actors):
-        for actor in actors:
-            if (isinstance(actor, MotherShip)):
-                return actor
-        return None
+        self._audio_service = audio_service
 
     def execute(self, actors, actions, clock, callback):
         """

@@ -9,8 +9,7 @@ class HandleShipAboveMotherShipAction(UpdateAction):
 
     def execute(self, actors, actions, clock, callback):
         """
-            Handle all actors' behavior when they're about to
-            go off the screen
+            Make sure the ship can't move into or under the mothership
         """
         # Find ship and mothership among the actors
         self._ship = actors.get_first_actor("ship")
