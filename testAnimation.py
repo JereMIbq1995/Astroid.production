@@ -7,7 +7,7 @@ from genie.cast.actor import Actor
 from genie.script.script import Script
 from genie.script.action import Action
 
-from genie.director2 import Director
+from genie.director import Director
 
 from testAnime.HandleQuitAction import HandleQuitAction
 from testAnime.HandleShipMovementAction import HandleShipMovementAction
