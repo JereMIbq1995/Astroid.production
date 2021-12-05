@@ -40,16 +40,18 @@ class RaylibScreenService:
                 convert image data to what pygame needs
                 use pygame to draw
     """
-    def __init__(self, window_size, title : str = ""):
+    def __init__(self, window_size, title : str = "", fps : int = 60):
         # if not pyray.is_window_ready():
         #     print("window initialized!")
         init_window(window_size[0], window_size[1], title)
         self._textures_cache = {}
+        self.set_fps(fps)
     
     def initialize(self):
         pass
     
     def set_fps(self, fps : int = 60):
+        self._fps = fps
         set_target_fps(fps)
 
     def _load_texture(self, actor : Actor):

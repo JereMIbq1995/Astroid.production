@@ -20,12 +20,14 @@ class PygameScreenService:
                 convert image data to what pygame needs
                 use pygame to draw
     """
-    def __init__(self, window_size, title : str = ""):
+    def __init__(self, window_size, title : str = "", fps : int = 60):
         if not pygame.get_init():
             pygame.init()
         self._images_cache = {}
         self._window = pygame.display.set_mode(window_size)
         pygame.display.set_caption(title)
+        self._clock = pygame.time.Clock()
+        self._fps = fps
     
     def initialize(self):
         pass
@@ -66,6 +68,7 @@ class PygameScreenService:
         """
             Actually putting whatever was drawn on to the screen
         """
+        self._clock.tick(self._fps)
         pygame.display.update()
 
     # def get_text_image(self):

@@ -9,7 +9,7 @@ from .script.action import Action
 from .script.action import InputAction
 from .script.action import OutputAction
 from .script.action import UpdateAction
-
+import time
 
 class Director(Action.Callback):
     """The thing that controls the execution of an animation. 
@@ -47,10 +47,17 @@ class Director(Action.Callback):
         self._actors = actors
         self._actions = actions
         self._is_directing = True
+        frame_counter = 0
+        time1 = time.time()
         while self._is_directing:
             self._do_inputs()
             self._do_updates()
             self._do_outputs()
+            frame_counter += 1
+            if time.time() - time1 >= 1:
+                print(frame_counter)
+                frame_counter = 0
+                time1 = time.time()
     
     def on_stop(self):
         """This Action.Callback override signals the animation to end."""

@@ -30,6 +30,7 @@ W_SIZE = (500, 700)
 START_POSITION = 200, 250
 SHIP_WIDTH = 40
 SHIP_LENGTH = 55
+FPS = 120
 
 def main():
 
@@ -98,13 +99,13 @@ def main():
     if int(service_code) == 1:
         keyboard_service = PygameKeyboardService()
         physics_service = PygamePhysicsService()
-        screen_service = PygameScreenService(W_SIZE, "Asteroid")
+        screen_service = PygameScreenService(W_SIZE, "Asteroid", FPS)
         audio_service = PygameAudioService()
         mouse_service = PygameMouseService()
     elif int(service_code) == 2:
         keyboard_service = RaylibKeyboardService()
         physics_service = RaylibPhysicsService()
-        screen_service = RaylibScreenService(W_SIZE, "Asteroid")
+        screen_service = RaylibScreenService(W_SIZE, "Asteroid", FPS)
         audio_service = RaylibAudioService()
         mouse_service = RaylibMouseService()
 
