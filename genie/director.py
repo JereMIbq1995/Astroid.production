@@ -3,6 +3,7 @@ from .script.script import Script
 from .script.action import Action
 from .clock import Clock
 import time
+
 class Director(Action.Callback):
     def __init__(self):
         self._cast = Cast()
@@ -26,7 +27,7 @@ class Director(Action.Callback):
                 print(frame_counter)
                 frame_counter = 0
                 time1 = time.time()
-
+                
     def on_stop(self):
         self._is_directing = False
     

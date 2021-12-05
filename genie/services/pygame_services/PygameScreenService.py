@@ -22,6 +22,7 @@ class PygameScreenService:
                 use pygame to draw
     """
     def __init__(self, window_size, title: str = "", fps : int = 60):
+
         if not pygame.get_init():
             pygame.init()
         self._images_cache = {}
