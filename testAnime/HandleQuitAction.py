@@ -1,4 +1,9 @@
 from genie.script.action import InputAction
+from genie.services import keys
+
+# from astroid.cast.ship import Ship
+
+VEL = 4
 
 class HandleQuitAction(InputAction):
     def __init__(self, priority, keyboard_service):

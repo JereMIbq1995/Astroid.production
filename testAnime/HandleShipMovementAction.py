@@ -1,6 +1,8 @@
 from genie.script.action import InputAction
 from genie.services import keys
 
+# from astroid.cast.ship import Ship
+
 VEL = 4
 
 class HandleShipMovementAction(InputAction):
@@ -8,7 +10,7 @@ class HandleShipMovementAction(InputAction):
         super().__init__(priority)
         self._keyboard_service = keyboard_service
         self._ship = None
-
+    
     def execute(self, actors, actions, clock, callback):
         """
             This action handles the movement of the ship

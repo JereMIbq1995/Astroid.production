@@ -1,4 +1,3 @@
-from astroid.cast.playerScore import PlayerScore
 from genie.script.action import OutputAction
 from genie.services import colors
 
@@ -20,9 +19,10 @@ class DrawScoreAction(OutputAction):
             - Print the score on the screen
         """
         if (self._score == None):
-            for actor in actors:
-                if isinstance(actor, PlayerScore):
-                    self._score = actor
-                    break
+            self._score = actors.get_first_actor("score")
+            # for actor in actors:
+            #     if isinstance(actor, PlayerScore):
+            #         self._score = actor
+            #         break
         if self._score != None:
             self._screen_service.draw_text("Score: " + str(self._score.get_score()), font_size=48, color=colors.WHITE, position= (20,20))

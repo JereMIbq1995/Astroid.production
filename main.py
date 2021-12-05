@@ -1,4 +1,6 @@
 from genie.director import Director
+from genie.cast.cast import Cast
+from genie.script.script import Script
 from genie.services import *
 
 from astroid.cast.ship import Ship
@@ -30,15 +32,52 @@ W_SIZE = (500, 700)
 START_POSITION = 200, 250
 SHIP_WIDTH = 40
 SHIP_LENGTH = 55
+
+SCREEN_TITLE = "Asteroids"
 FPS = 120
 
+def get_services():
+    """
+        Ask the user whether they want to use pygame or raylib services
+    """
+    # Initialize all services:
+    service_code = 0
+    valid = False
+    while not valid:
+        service_code = str(input("What service would you like to use? (Input 1 for Pygame or 2 for Raylib): ")).strip()
+        if len(str(service_code)) < 1 or not (int(service_code) == 1 or int(service_code) == 2):
+            print("Incorrect input! Please try again!")
+        else:
+            service_code = int(service_code)
+            valid = True
+    
+    return {
+        "keyboard" : PygameKeyboardService() if service_code == 1 else RaylibKeyboardService(),
+        "physics" : PygamePhysicsService() if service_code == 1 else RaylibPhysicsService(),
+        "screen" : PygameScreenService(W_SIZE, SCREEN_TITLE, FPS) if service_code == 1 \
+                    else RaylibScreenService(W_SIZE, SCREEN_TITLE, FPS),
+        "audio" : PygameAudioService() if service_code == 1 else RaylibAudioService(),
+        "mouse" : PygameMouseService() if service_code == 1 else RaylibMouseService()
+    }
+
 def main():
+    """
+        Create director, cast, script, then run the game loop
+    """
+    # Get all the services needed services 
+    services = get_services()
+
+    keyboard_service = services["keyboard"]
+    physics_service = services["physics"]
+    screen_service = services["screen"]
+    audio_service = services["audio"]
+    mouse_service = services["mouse"]
 
     # Create a director
     director = Director()
 
     # Create all the actors, including the player
-    cast = []
+    cast = Cast()
 
     # Create Mothership:
     mother_ship = MotherShip(path="astroid/assets/mother_ship.png",
@@ -52,7 +91,7 @@ def main():
                             show_text_health=True)
                             
     # Create the player
-    player = Ship(path="astroid/assets/spaceship/spaceship_yellow.png", 
+    ship = Ship(path="astroid/assets/spaceship/spaceship_yellow.png", 
                     width = 70,
                     height = 50,
                     x = W_SIZE[0]/2,
@@ -79,63 +118,41 @@ def main():
 
     # Give actor(s) to the cast. Append the background first so that it won't
     # be drawn on top of other actors.
-    cast.append(background_image)
-    cast.append(player)
-    cast.append(mother_ship)
-    cast.append(score)
-    cast.append(start_button)
+    cast.add_actor("background_image", background_image)
+    cast.add_actor("ship", ship)
+    cast.add_actor("mother_ship", mother_ship)
+    cast.add_actor("score", score)
+    cast.add_actor("start_button", start_button)
 
     # Create all the actions
-    script = []
-
-    # Initialize all services:
-    service_code = 0
-    while not (int(service_code) == 1 or int(service_code) == 2):
-        service_code = str(input("What service would you like to use? (Input 1 for Pygame or 2 for Raylib): ")).strip()
-        if not (int(service_code) == 1 or int(service_code) == 2):
-            print (service_code)
-            print("Incorrect input! Please try again!")
-
-    if int(service_code) == 1:
-        keyboard_service = PygameKeyboardService()
-        physics_service = PygamePhysicsService()
-        screen_service = PygameScreenService(W_SIZE, "Asteroid", FPS)
-        audio_service = PygameAudioService()
-        mouse_service = PygameMouseService()
-    elif int(service_code) == 2:
-        keyboard_service = RaylibKeyboardService()
-        physics_service = RaylibPhysicsService()
-        screen_service = RaylibScreenService(W_SIZE, "Asteroid", FPS)
-        audio_service = RaylibAudioService()
-        mouse_service = RaylibMouseService()
+    script = Script()
 
     # Create input actions
-    script.append(HandleQuitAction(1, keyboard_service))
+    # script.append(HandleQuitAction(1, keyboard_service))
+    script.add_action("input", HandleQuitAction(1, keyboard_service))
 
     # Add actions that must be added to the script when the game starts
-    startgame_actions = []
-    startgame_actions.append(HandleShootingAction(1, keyboard_service, audio_service))
-    startgame_actions.append(HandleShipMovementAction(2, keyboard_service))
-    startgame_actions.append(SpawnAstroidsAction(1, W_SIZE))
-    script.append(HandleStartGameAction(2, mouse_service, physics_service, startgame_actions))
-    # script.append(HandleShipMovementAction(1, keyboard_service))
-    # script.append(HandleShootingAction(1, keyboard_service, audio_service))
+    startgame_actions = {"input" : [], "update" : [], "output": []}
+    startgame_actions["input"].append(HandleShootingAction(1, keyboard_service, audio_service))
+    startgame_actions["input"].append(HandleShipMovementAction(2, keyboard_service))
+    startgame_actions["update"].append(SpawnAstroidsAction(1, W_SIZE))
+    script.add_action("input", HandleStartGameAction(2, mouse_service, physics_service, startgame_actions))
 
     # Create update actions
-    script.append(MoveActorsAction(1, physics_service))
-    script.append(HandleOffscreenAction(1, W_SIZE))
-    script.append(HandleShipAboveMotherShipAction(1, W_SIZE))
-    script.append(HandleShipAstroidsCollision(1, physics_service, audio_service))
-    script.append(HandleBulletsAstroidsCollision(1, physics_service, audio_service))
-    script.append(HandleMothershipAstroidsCollision(1, physics_service, audio_service))
+    script.add_action("update", MoveActorsAction(1, physics_service))
+    script.add_action("update", HandleOffscreenAction(1, W_SIZE))
+    script.add_action("update", HandleShipAboveMotherShipAction(1, W_SIZE))
+    script.add_action("update", HandleShipAstroidsCollision(1, physics_service, audio_service))
+    script.add_action("update", HandleBulletsAstroidsCollision(1, physics_service, audio_service))
+    script.add_action("update", HandleMothershipAstroidsCollision(1, physics_service, audio_service))
     # script.append(SpawnAstroidsAction(1, W_SIZE))
 
     # Create output actions
-    script.append(PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav", audio_service))
-    script.append(DrawActorsAction(1, screen_service))
-    script.append(DrawHealthBarsAction(1, screen_service))
-    script.append(DrawScoreAction(1, screen_service))
-    script.append(UpdateScreenAction(2, screen_service))
+    script.add_action("output", PlayBackgroundMusicAction(1, "astroid/assets/sound/background_music.wav", audio_service))
+    script.add_action("output", DrawActorsAction(1, screen_service))
+    script.add_action("output", DrawHealthBarsAction(1, screen_service))
+    script.add_action("output", DrawScoreAction(1, screen_service))
+    script.add_action("output", UpdateScreenAction(2, screen_service))
 
     # Give the cast and script to the dirrector by calling direct_scene.
     # direct_scene then runs the main game loop:

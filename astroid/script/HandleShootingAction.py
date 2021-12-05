@@ -3,10 +3,8 @@ import time
 from genie.script.action import InputAction
 from genie.services import keys
 
-from astroid.cast.ship import Ship
 from astroid.cast.bullet import Bullet
 
-VEL = 4
 BULLET_VX = 0
 BULLET_VY = -10
 ATTACK_INTERVAL = 0.25   # seconds
@@ -19,7 +17,7 @@ class HandleShootingAction(InputAction):
         self._keyboard_service = keyboard_service
         self._audio_service = audio_service
     
-    def _spawn_bullet(self, clock, callback):
+    def _spawn_bullet(self, clock, actors):
         """
             Only spawn a bullet if:
                 - The time from the last time bullet spawn until now is >= ATTACK_INTERVAL
@@ -33,7 +31,7 @@ class HandleShootingAction(InputAction):
             
             # Spawn bullet
             bullet = Bullet("astroid/assets/bullet.png", 20, 30, x = bullet_x, y = bullet_y, vx = BULLET_VX, vy = BULLET_VY)
-            callback.add_actor(bullet)
+            actors.add_actor("bullets", bullet)
 
             # Play the shooting sound :)
             self._audio_service.play_sound("astroid/assets/sound/bullet_shot.wav", 0.1)
@@ -41,23 +39,13 @@ class HandleShootingAction(InputAction):
             # Record the time this bullet spawns
             self._last_bullet_spawn = time.time()
 
-    def _get_ship(self, actors):
-        """
-            Look through the actors and return the ship.
-            Returns None if Ship is not in the list.
-        """
-        for actor in actors:
-            if(isinstance(actor, Ship)):
-                return actor
-        return None
-
     def execute(self, actors, actions, clock, callback):
         """
             Handle the shooting when the user presses SPACE
         """
         # Look for the ship first to make sure it's still alive
-        self._ship = self._get_ship(actors)
+        self._ship = actors.get_first_actor("ship")
         
         # If Space is pressed, spawn a bullet
         if self._keyboard_service.is_key_down(keys.SPACE):
-            self._spawn_bullet(clock, callback)
+            self._spawn_bullet(clock, actors)
