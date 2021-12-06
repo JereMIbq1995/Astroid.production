@@ -24,8 +24,12 @@ class HandleFrogMovementAction(InputAction):
             # Check which keys are pressed and update the ship's velocity accordingly
             keys_state = self._keyboard_service.get_keys_state(keys.A, keys.D, keys.S, keys.W)
             if keys_state[keys.A]:
+                if (not self._frog.flipped()):
+                    self._frog.flip_image()
                 self._frog.set_vx(-VEL)
             if keys_state[keys.D]:
+                if (self._frog.flipped()):
+                    self._frog.flip_image()
                 self._frog.set_vx(VEL)
             if keys_state[keys.S]:
                 self._frog.set_vy(VEL)

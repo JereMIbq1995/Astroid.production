@@ -50,7 +50,9 @@ def main():
     script = Script()
 
     # For now there's only the ship in the cast
-    cast.add_actor("ship", Actor(path="astroid/assets/spaceship/spaceship_yellow.png", 
+    # Notice I used the astroid image here for the ship
+    #   just so that you can see how the image is flipped
+    cast.add_actor("ship", Actor(path="astroid/assets/astroids/astroid_large.png", 
                     width = 70,
                     height = 50,
                     x = W_SIZE[0]/2,
@@ -63,8 +65,8 @@ def main():
     for i in range(1, 11):
         file_index = "0" + str(i) if i < 10 else str(i)
         frog_animations.append(f"testAnime/assets/frog/frame_{file_index}.png")
-        # print(f"assets/frog/frame_{file_index}.png")
-    cast.add_actor("frog", AnimatedActor(frog_animations, 256, 128, 30, MAX_FPS, True, W_SIZE[0]/2, W_SIZE[1]/2))
+        # print(f"assets/frog/frame_{file_index}.png") 
+    cast.add_actor("frog", AnimatedActor(frog_animations, 256, 128, 30, MAX_FPS, True, W_SIZE[0]/2, W_SIZE[1]/2, flipped=True))
     cast.add_actor("frog", AnimatedActor(frog_animations, 256, 128, 30, MAX_FPS, False, W_SIZE[0]/3, W_SIZE[1]/3))
 
     # Add actions to the script

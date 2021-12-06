@@ -23,8 +23,12 @@ class HandleShipMovementAction(InputAction):
             # Check which keys are pressed and update the ship's velocity accordingly
             keys_state = self._keyboard_service.get_keys_state(keys.LEFT, keys.RIGHT, keys.DOWN, keys.UP)
             if keys_state[keys.LEFT]:
+                if self._ship.flipped():
+                    self._ship.flip_image()
                 self._ship.set_vx(-VEL)
             if keys_state[keys.RIGHT]:
+                if not self._ship.flipped():
+                    self._ship.flip_image()
                 self._ship.set_vx(VEL)
             if keys_state[keys.DOWN]:
                 self._ship.set_vy(VEL)
